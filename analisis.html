@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Analisis All Cabang Bone Hacker</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+<body class="bg-white text-black">
+  <main class="container mx-auto p-6">
+    <header class="text-center mb-6">
+      <h1 class="text-2xl font-bold">Analisis All Cabang</h1>
+      <p class="text-lg mb-2">BONE HACKER <span id="bulanHeader"></span></p>
+      <label for="bulanPicker">Pilih Bulan:</label>
+      <select id="bulanPicker" class="border p-2 rounded">
+        <option value="april">April 2025</option>
+        <option value="mei">Mei 2025</option>
+        <option value="juni">Juni 2025</option>
+        <option value="juli">Juli 2025</option>
+      </select>
+      <p id="todayDate" class="text-sm text-gray-600 mt-2"></p>
+    </header>
+
+    <!-- Contoh Ringkasan -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center">
+      <div><div id="totalPasien" class="text-2xl font-bold">-</div><div>Total Pasien</div></div>
+      <div><div id="pasienBaru" class="text-2xl font-bold text-green-600">-</div><div>Pasien Baru</div></div>
+      <div><div id="pasienLama" class="text-2xl font-bold text-blue-600">-</div><div>Pasien Lama</div></div>
+      <div><div id="rataRata" class="text-2xl font-bold text-orange-600">-</div><div>Rata-rata/Hari</div></div>
+    </section>
+
+    <!-- Tambahkan Chart & Tabel sesuai kebutuhan -->
+
+  </main>
+
+<script>
+  // ✅ Sudah diperbaiki: koma yang hilang di bulanLabel dan API_MAP
+  const API_MAP = {
+    april: 'https://script.google.com/macros/s/AKfycby6jW-vmVgRKlBlW-gBKLfnE4FLfDkM-jxzG4kgs1mgL7IJlwlFIX0j7hNomihzaQH2jg/exec',
+    mei:   'https://script.google.com/macros/s/AKfycbx5tHgTXzn0A1uxdjCYMLpb79DuURMTsNPXqPd0tLn4DG3UbtlygovWEFq73k2AdAuP/exec',
+    juni:  'https://script.google.com/macros/s/AKfycbxzZWtyyfcQY3tFOyZ9fxhx6j81Kfdh7QjJvoXZCA0k9MPgOldmgSvqP_GZPvccmHPJ/exec',
+    juli:  'https://script.google.com/macros/s/AKfycbzxi0ObtvJVuLJoSQwMrGHCWpnZeyPpwLD5fk8k9CCNJyCqS2m007l0mzgaDn9P3ilW/exec'
+  };
+
+  const bulanLabel = {
+    april: "APRIL 2025",
+    mei: "MEI 2025",
+    juni: "JUNI 2025",
+    juli: "JULI 2025"
+  };
+
+  const today = new Date();
+  const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' };
+  document.getElementById('todayDate').textContent = 'Tanggal: ' + today.toLocaleDateString('id-ID', options);
+
+  const monthMap = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'];
+  let currentBulan = monthMap[today.getMonth()];
+  if (!API_MAP[currentBulan]) currentBulan = 'mei';
+  let currentApi = API_MAP[currentBulan];
+  document.getElementById('bulanPicker').value = currentBulan;
+  document.getElementById('bulanHeader').textContent = bulanLabel[currentBulan];
+
+  document.getElementById('bulanPicker').addEventListener('change', function() {
+    currentBulan = this.value;
+    currentApi = API_MAP[currentBulan];
+    document.getElementById('bulanHeader').textContent = bulanLabel[currentBulan];
+    // Panggil loadData() jika ada
+  });
+</script>
+</body>
+</html>
